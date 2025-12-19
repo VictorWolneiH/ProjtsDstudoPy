@@ -4,7 +4,7 @@ import subprocess
 def laucnherP():
     subprocess.Popen([
         "/usr/bin/python3",
-        "/home/Sh0tinh4/Documentos/MeusProjetos/teste/grafico.py"
+        "/home/Sh0tinh4/Documentos/MeusProjetos/ProjtsDstudoPy/ProjetosDEstudo/grafico.py"
     ])
 
 janela = tk.Tk()
