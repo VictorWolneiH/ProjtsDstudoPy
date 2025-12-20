@@ -144,6 +144,32 @@ time.sleep(1)
 
 ataqueP = random.randint(1, 100)
 
+
+def ataque_player(dano, chance):
+    global hp_inimigo
+    global atakado
+
+    taxa = random.randint(1,10)
+
+    if taxa <= chance:
+        errouatk()
+        atakado = 1
+        time.sleep(2)
+    else:
+        print("seu pokemon ataca")
+        time.sleep(0.5)
+        hp_inimigo -= dano
+        time.sleep(2)
+
+        if hp_inimigo > 0:
+            print("a vida atual do inimigo é ", hp_inimigo)
+        else:
+            print("o HP do inimigo chegou à 0")
+        atakado = 1
+        time.sleep(1)
+
+
+
 if ataqueP % 2 == 0:
     ataqueP = "player"
 else:
@@ -158,7 +184,7 @@ while hpA > 0 and hp_inimigo > 0:
         
         while atakado == 0:
             atakado = 0
-            chance = random.randint(1, 11)
+            # chance = random.randint(1, 11)
 
             try:
                 atke = int(input("escolha um atk, pelo numero: "))
@@ -167,22 +193,7 @@ while hpA > 0 and hp_inimigo > 0:
                 time.sleep(2)
                 break
             if atke == 1:
-                if chance > 2:
-                    errouatk()
-                    atakado = 1
-                    time.sleep(2)
-                else:
-                    print("seu pokemon ataca")
-                    time.sleep(0.5)
-                    hp_inimigo -= 33
-                    time.sleep(2)
-
-                    if hp_inimigo > 0:
-                        print("a vida atual do inimigo é ", hp_inimigo)
-                    else:
-                        print("o HP do inimigo chegou à 0")
-                    atakado = 1
-                    time.sleep(1)
+                ataque_player(20, 1)
 
             elif atke == 2:
                 if chance <= 2:
