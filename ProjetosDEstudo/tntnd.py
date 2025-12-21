@@ -5,60 +5,56 @@ import time
 tentativas = [0, 1, 2, 3, 4, 5, 6]
 escolha = ''
 
-## vidas
-hp_inimigo = 140
-
-hpD = 121
-hpS = 180
-hpG = 110
-
 ###pokemons apenas 3
+swampert = {"nome": 'swampert',  'hp': 180, 'def': 13, 'ataques': {
+            1: {'nome': 'Waterpulse', 'dano': 20, 'chance_erro': 1},
+            2: {'nome': 'earfquake', 'dano': 50, 'chance_erro': 35},
+            3: {'nome': 'mudslap', 'dano': 30, 'chance_erro': 15},
+            4: {'nome': 'rockpunch', 'dano': 40, 'chance_erro': 20}}}
 
-delphx = ''
-ataquesD = ["FlameWheel", "PoisonSticky", "PsyBean", "bite"]
+gengar = {"nome": 'gengar',  'hp': 110, 'def': 8, 'ataques': {
+            1: {'nome': 'shadowball', 'dano': 20, 'chance_erro': 1},
+            2: {'nome': 'lick', 'dano': 50, 'chance_erro': 35},
+            3: {'nome': 'shadowpunch', 'dano': 30, 'chance_erro': 15},
+            4: {'nome': 'curse', 'dano': 40, 'chance_erro': 20}}}
 
-swanpet = ''
-ataqueS = ["WaterPulse", "EarthQuake", "MudSlap", "RockPunch"]
+delphox = {"nome": 'delphox',  'hp': 121, 'def': 7, 'ataques': {
+            1: {'nome': 'flamewheel', 'dano': 20, 'chance_erro': 1},
+            2: {'nome': 'psybean', 'dano': 50, 'chance_erro': 35},
+            3: {'nome': 'bite', 'dano': 30, 'chance_erro': 15},
+            4: {'nome': 'poisonsticky', 'dano': 40, 'chance_erro': 20}}}
 
-genga = ''
-ataqueG = ["ShadowBall", "Lick", "ShadowPunch", "Curse"]
+### inimigos tbm vão ser 3 no momento
+sentrent = {'nome': 'sentrent', 'hp': 134, 'def': 6, 'ataques': {
+            'scratch': {'dano': 25, 'chance': 1},
+            'tackle': {'dano': 15, 'chance': 1}}}
 
-def swanpert():
-    print("swanpert entra em campo")
+zubat = {'nome': 'zubat', 'hp': 120, 'def': 10, 'ataques': {
+            'bite': {'dano': 30, 'chance': 1},
+            'wing attack': {'dano': 35, 'chance': 1}}}
+
+hoothoot = {'nome': 'hoothoot', 'hp': 100, 'def': 16, 'ataques': {
+            'peck': {'dano': 25, 'chance': 1},
+            'echoed voice': {'dano': 45, 'chance': 1}}}
+
+###agr eu vou criar um bidoof deus só de meme
+
+bidoof = {'nome': 'bidoof', 'hp': 1000000, 'def': 1000000, 'ataques': {
+            'apagamento existencial': {'instakill': True, 'chance': 1},
+            'quebrar pokeballs': {'efeito': 'amaldiçoar'}}}
+
+def pokebroke():
+    time.sleep(1)
+    print('aparentemente BIDOOF está de mal-humorl...')
     time.sleep(2)
-
-def gengar():
-    print ("gengar entrou em campo")
+    print('você foi amaldiçoado...')
     time.sleep(2)
+    print('toda pokebola que tocares se partirá...')
+    time.sleep(0.5)
+    print('inclusive as que possui agora...')
+    time.sleep(4)
+    print('todos seus pokémon foram libertos e fugiram.')
 
-def delphox():
-    print("delphox entra em campo")
-    time.sleep(2)
-    # atacar = input("O que fazer, lutar ou fugir?  ")
-    # while hp_inimigo > 0:
-    #     if atacar == "lutar":
-    #         print(ataquesD)
-    #         ataque = input("escolha um dos ataques: ").lower()
-    #         if ataque == "flamewheel":
-    #             hp_inimigo-=33
-    #             if hp_inimigo > 0:
-    #                 print(hp_inimigo)
-    #                 print("ataque super efetivo")
-    #             else:
-    #                 print("você venceu!!!!!!!!!!")
-
-    #     elif atacar == "fugir":
-    #         print("tentando fugir....")
-    #         # for chances in tentativas:  ## eu to tentando fzr um sistema de chance, mas eu vi q n vai da certo assim, ent vo deixar comentado
-    #         #     if chance
-    #         print ("você cnseguiu fugir")
-    #         break
-        
-    #     else:
-    #         print("erro!!")
-    #     if hpD < 1:
-    #         print("little poor da delf, foi de arrasta...")
-    #         break
 
 def errouatk():
     print("seu pokemon errou o ataque... q pena")
@@ -107,7 +103,8 @@ while escolha not in mtn:
 defe = ''
 hpA = ''
 
-
+def status_pokemon(DefP, HpPo):
+    global
 if escolha == "1":
     defe = 7
     hpA = hpD
@@ -189,7 +186,7 @@ while hpA > 0 and hp_inimigo > 0:
             try:
                 atke = int(input("escolha um atk, pelo numero: "))
             except ValueError:
-                print("isso não é um numero")
+                print("isso não é um numero, perdeu a vez")
                 time.sleep(2)
                 break
             if atke == 1:
