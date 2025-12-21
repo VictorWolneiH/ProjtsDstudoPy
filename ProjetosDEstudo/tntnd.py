@@ -63,7 +63,7 @@ def delphox():
 def errouatk():
     print("seu pokemon errou o ataque... q pena")
     time.sleep(1)
-    print("a vida atual do inimigo é ", hp_inimigo)
+    print("a vida atual do inimigo ainda é ", hp_inimigo)
 
 def atakV():
     if escolha == "1":
@@ -149,7 +149,7 @@ def ataque_player(dano, chance):
     global hp_inimigo
     global atakado
 
-    taxa = random.randint(1,10)
+    taxa = random.randint(1, 100)
 
     if taxa <= chance:
         errouatk()
@@ -196,58 +196,13 @@ while hpA > 0 and hp_inimigo > 0:
                 ataque_player(20, 1)
 
             elif atke == 2:
-                if chance <= 2:
-                    errouatk()
-                    atakado = 1
-                    time.sleep(2)
-                else:
-                    print("seu pokemon ataca")
-                    time.sleep(0.5)
-                    hp_inimigo -= 50
-                    time.sleep(2)
-
-                    if hp_inimigo > 0:
-                        print("a vida atual do inimigo é ", hp_inimigo)
-                    else:
-                        print("o HP do inimigo chegou à 0")
-                    atakado = 1
-                    time.sleep(1)
+                ataque_player(50, 35)
 
             elif atke == 3:
-                if chance <= 2:
-                    errouatk()
-                    atakado = 1
-                    time.sleep(2)
-                else:
-                    print("seu pokemon ataca")
-                    time.sleep(0.5)
-                    hp_inimigo -= 42
-                    time.sleep(2)
-
-                    if hp_inimigo > 0:
-                        print("a vida atual do inimigo é ", hp_inimigo)
-                    else:
-                        print("o HP do inimigo chegou à 0")
-                    atakado = 1
-                    time.sleep(1)
+                ataque_player(30, 15)
 
             elif atke == 4:
-                if chance <= 2:
-                    errouatk()
-                    atakado = 1
-                    time.sleep(2)
-                else:
-                    print("seu pokemon ataca")
-                    time.sleep(0.5)
-                    hp_inimigo -= 33
-                    time.sleep(2)
-
-                    if hp_inimigo > 0:
-                        print("a vida atual do inimigo é ", hp_inimigo)
-                    else:
-                        print("o HP do inimigo chegou à 0")
-                    atakado = 1
-                    time.sleep(1)
+                ataque_player(40, 20)
 
             elif atke > 4:
                 print("esse atk n tá na lista")
