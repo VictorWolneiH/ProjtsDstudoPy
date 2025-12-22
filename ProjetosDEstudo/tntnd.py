@@ -6,42 +6,81 @@ fugir = False
 
 
 ###pokemons apenas 
+### tentando criar a classe dos pokemon e dos atk deles... acho q vai ser complicado pra krl
+class Pokemon():
+    def __init__(self, nome, hp, defe, movimentos, tipo1, tipo2 = None, raridade = 'comum'):
+        self.nome = nome
+        self.hp = hp
+        self.hp_max = hp
+        self.defe = defe
+        self.tipo1 = tipo1
+        self.tipo2 = tipo2
+        self.moves = movimentos
+        self.raridade = raridade
 
-swampert = {"nome": 'swampert',  'hp': 180, 'def': 13, 'ataques': {
-            1: {'nome': 'Waterpulse', 'dano': 20, 'chance_erro': 100},
-            2: {'nome': 'earfquake', 'dano': 50, 'chance_erro': 35},
-            3: {'nome': 'mudslap', 'dano': 30, 'chance_erro': 15},
-            4: {'nome': 'muddy water', 'dano': 40, 'chance_erro': 20}}}
+class Movimento(): 
+    def __init__(self, nome, dano, chance_erro, tipo, efeito = None, instakill = False):
+        self.nome = nome
+        self.dano = dano
+        self.chance_erro = chance_erro
+        self.tipo = tipo
+        self.efeito = efeito
+        self.instakill = instakill
+        
+todos_moves = {'waterpulse': Movimento('waterpulse', 20, 100, 'agua', None, False), 
+               'earfquake': Movimento('earfquake', 50, 35, 'terra', None, False), 
+               'mudslap': Movimento('mudslap', 30, 15, 'terra', None, False), 
+               'muddy water': Movimento('Muddy Water', 40, 20, 'agua', None, False),
+               'lick': Movimento('Lick', 35, 90, 'fantasma', None, False),
+               'shadowball': Movimento('ShadowBall', 50, 40, 'sombrio', None, False),
+               'curse': Movimento('Curse', 10, 100, 'sombrio', None, False),
+               'shadowpunch': Movimento('ShadowPunch', 35, 60, 'sombrio', None, False),
+               'bite': Movimento('Bite', 20, 70, 'sombrio', None, False),
+               'mystical fire': Movimento('Mystical Fire', 60, 60, 'fogo', None, False),
+               'psybean': Movimento('PsyBean', 45, 55, 'psiquico', None, False),
+               'flamewheel': Movimento('FlameWheel', 40, 75, 'fogo', None, False),
+               'scratch': Movimento('Scratch', 25, 100, 'normal', None, False),
+               'tackle': Movimento('Tackle', 15, 100, 'normal', None, False),
+               'wing attack': Movimento('Wing Attack', 35, 100, 'voador', None, False),
+               'peck': Movimento('Peck', 25, 100, 'normal', None, False), 
+               'echoed voice': Movimento('Echoed Voice', 45, 90, 'normal', None, False),
+               'apagamento': Movimento('Apagamento Existencial', 0, 1000000, 'além', None, True),
+               'pokebroke': Movimento('Quebrar Pokebolas', 0, 1000000, 'além', 'maldição', False)}
 
-gengar = {"nome": 'gengar',  'hp': 110, 'def': 8, 'ataques': {
-            1: {'nome': 'shadowball', 'dano': 20, 'chance_erro': 1},
-            2: {'nome': 'lick', 'dano': 50, 'chance_erro': 35},
-            3: {'nome': 'shadowpunch', 'dano': 30, 'chance_erro': 15},
-            4: {'nome': 'curse', 'dano': 40, 'chance_erro': 20}}}
+poke_Swampert = Pokemon('Swampert', 180, 20, {1: todos_moves['waterpulse'],
+                                              2: todos_moves['earfquake'],
+                                              3: todos_moves['mudslap'],
+                                              4: todos_moves['muddy water']},
+                                               'agua', 'terra', 'foda')
 
-delphox = {"nome": 'delphox',  'hp': 121, 'def': 7, 'ataques': {
-            1: {'nome': 'flamewheel', 'dano': 20, 'chance_erro': 1},
-            2: {'nome': 'psybean', 'dano': 50, 'chance_erro': 35},
-            3: {'nome': 'bite', 'dano': 30, 'chance_erro': 15},
-            4: {'nome': 'mystical fire', 'dano': 40, 'chance_erro': 20}}}
+poke_Gegar = Pokemon('Gengar', 110, 12, {1: todos_moves['shadowball'],
+                                         2: todos_moves['lick'],
+                                         3: todos_moves['shadowpunch'],
+                                         4: todos_moves['curse']},
+                                         'fantasma', 'veneno', 'foda')
+
+poke_Delphox = Pokemon('Delphox', 125, 10, {1: todos_moves['flamewheel'],
+                                         2: todos_moves['bite'],
+                                         3: todos_moves['psybean'],
+                                         4: todos_moves['mystical fire']},
+                                         'fogo', 'psiquico', 'foda')
 
 ### inimigos tbm vão ser 3 no momento
-sentrent = {'nome': 'sentrent', 'hp': 134, 'def': 6, 'peso': 33, 'ataques': {
-            1: {'nome': 'scratch', 'dano': 25, 'chance_erro': 1},
-            2: {'nome': 'tackle', 'dano': 15, 'chance_erro': 1}}}
+poke_Sentrent = Pokemon('Sentrent', 134, 6, {1: todos_moves['scratch'],
+                                             2: todos_moves['tackle']},
+                                             'normal', None, 'comum')
 
-zubat = {'nome': 'zubat', 'hp': 120, 'def': 10, 'peso': 33, 'ataques': {
-            1: {'nome': 'bite', 'dano': 30, 'chance_erro': 1},
-            2: {'nome': 'wing attack', 'dano': 35, 'chance_erro': 1}}}
+poke_Zubat = Pokemon('Zubat', 120, 10, {1: todos_moves['bite'],
+                                        2: todos_moves['wing attack']},
+                                        'voador', 'normal', 'comum')
 
-hoothoot = {'nome': 'hoothoot', 'hp': 100, 'def': 16, 'peso': 33, 'ataques': {
-            1: {'nome': 'peck', 'dano': 25, 'chance_erro': 1},
-            2: {'nome': 'echoed voice', 'dano': 45, 'chance_erro': 1}}}
+poke_Hoothoot = Pokemon('HootHoot', 100, 15, {1: todos_moves['peck'],
+                                              2: todos_moves['echoed voice']},
+                                              'normal', 'voador', 'comum')
 
-###agr eu vou criar um bidoof deus só de meme
-bidoof = {'nome': 'bidoof', 'hp': 1000000, 'def': 1000000, 'peso': 1, 'ataques': {
-            1: {'nome': 'apagamento existencial', 'instakill': True, 'chance_erro': 1},
-            2: {'nome': 'quebrar pokeballs', 'efeito': 'amaldiçoar', 'chance_erro': 1}}}
+poke_Bidoof = Pokemon('BIDOOF', 1000000, 1000000, {1: todos_moves['apagamento'],
+                                                   2: todos_moves['pokebroke']},
+                                                   'além', None, 'INFINITA')                                        
 
 ####listas dos times
 meutime = [delphox, swampert, gengar]
