@@ -1,16 +1,17 @@
 #### TENTANDO CRIAR UM MINI JOGO ####
 import random
 import time
+turno = ''
+fugir = False
 
-tentativas = [0, 1, 2, 3, 4, 5, 6]
-escolha = ''
 
-###pokemons apenas 3
+###pokemons apenas 
+
 swampert = {"nome": 'swampert',  'hp': 180, 'def': 13, 'ataques': {
-            1: {'nome': 'Waterpulse', 'dano': 20, 'chance_erro': 1},
+            1: {'nome': 'Waterpulse', 'dano': 20, 'chance_erro': 100},
             2: {'nome': 'earfquake', 'dano': 50, 'chance_erro': 35},
             3: {'nome': 'mudslap', 'dano': 30, 'chance_erro': 15},
-            4: {'nome': 'rockpunch', 'dano': 40, 'chance_erro': 20}}}
+            4: {'nome': 'muddy water', 'dano': 40, 'chance_erro': 20}}}
 
 gengar = {"nome": 'gengar',  'hp': 110, 'def': 8, 'ataques': {
             1: {'nome': 'shadowball', 'dano': 20, 'chance_erro': 1},
@@ -22,32 +23,36 @@ delphox = {"nome": 'delphox',  'hp': 121, 'def': 7, 'ataques': {
             1: {'nome': 'flamewheel', 'dano': 20, 'chance_erro': 1},
             2: {'nome': 'psybean', 'dano': 50, 'chance_erro': 35},
             3: {'nome': 'bite', 'dano': 30, 'chance_erro': 15},
-            4: {'nome': 'poisonsticky', 'dano': 40, 'chance_erro': 20}}}
+            4: {'nome': 'mystical fire', 'dano': 40, 'chance_erro': 20}}}
 
 ### inimigos tbm vão ser 3 no momento
-sentrent = {'nome': 'sentrent', 'hp': 134, 'def': 6, 'ataques': {
-            'scratch': {'dano': 25, 'chance': 1},
-            'tackle': {'dano': 15, 'chance': 1}}}
+sentrent = {'nome': 'sentrent', 'hp': 134, 'def': 6, 'peso': 33, 'ataques': {
+            1: {'nome': 'scratch', 'dano': 25, 'chance_erro': 1},
+            2: {'nome': 'tackle', 'dano': 15, 'chance_erro': 1}}}
 
-zubat = {'nome': 'zubat', 'hp': 120, 'def': 10, 'ataques': {
-            'bite': {'dano': 30, 'chance': 1},
-            'wing attack': {'dano': 35, 'chance': 1}}}
+zubat = {'nome': 'zubat', 'hp': 120, 'def': 10, 'peso': 33, 'ataques': {
+            1: {'nome': 'bite', 'dano': 30, 'chance_erro': 1},
+            2: {'nome': 'wing attack', 'dano': 35, 'chance_erro': 1}}}
 
-hoothoot = {'nome': 'hoothoot', 'hp': 100, 'def': 16, 'ataques': {
-            'peck': {'dano': 25, 'chance': 1},
-            'echoed voice': {'dano': 45, 'chance': 1}}}
+hoothoot = {'nome': 'hoothoot', 'hp': 100, 'def': 16, 'peso': 33, 'ataques': {
+            1: {'nome': 'peck', 'dano': 25, 'chance_erro': 1},
+            2: {'nome': 'echoed voice', 'dano': 45, 'chance_erro': 1}}}
 
 ###agr eu vou criar um bidoof deus só de meme
+bidoof = {'nome': 'bidoof', 'hp': 1000000, 'def': 1000000, 'peso': 1, 'ataques': {
+            1: {'nome': 'apagamento existencial', 'instakill': True, 'chance_erro': 1},
+            2: {'nome': 'quebrar pokeballs', 'efeito': 'amaldiçoar', 'chance_erro': 1}}}
 
-bidoof = {'nome': 'bidoof', 'hp': 1000000, 'def': 1000000, 'ataques': {
-            'apagamento existencial': {'instakill': True, 'chance': 1},
-            'quebrar pokeballs': {'efeito': 'amaldiçoar'}}}
+####listas dos times
+meutime = [delphox, swampert, gengar]
+inimigo = [zubat, hoothoot, sentrent, bidoof]
 
+### vo tenta deixar as função tudo juntinha
 def pokebroke():
     time.sleep(1)
     print('aparentemente BIDOOF está de mal-humorl...')
     time.sleep(2)
-    print('você foi amaldiçoado...')
+    print('você foi amaldiçoado...')      ####isso é só a maldição do bidoof, já q ele n tem atk real
     time.sleep(2)
     print('toda pokebola que tocares se partirá...')
     time.sleep(0.5)
@@ -55,186 +60,129 @@ def pokebroke():
     time.sleep(4)
     print('todos seus pokémon foram libertos e fugiram.')
 
+def atacamento(atacante, bola, goleiro):
+    ataque = atacante['ataques'][bola]
 
-def errouatk():
-    print("seu pokemon errou o ataque... q pena")
-    time.sleep(1)
-    print("a vida atual do inimigo ainda é ", hp_inimigo)
+    nome_do_ataque = ataque['nome']
+    dano = ataque['dano']
+    chance_erro = ataque['chance_erro']
 
-def atakV():
-    if escolha == "1":
-        print(ataquesD)
+    print(f'{atacante['nome']} usou {nome_do_ataque}')
 
-    elif escolha == "2":
-        print(ataqueS)
+    dice = random.randint(1, 100)
 
-    elif escolha == "3":
-        print(ataqueG)
-
-
-
-meutime = ["Delphox", "Swanpert", "Gengar"]
-mtn = ["1", "2", "3"]
-print("um inimigo apareceu...")
-
-time.sleep(2)
-while escolha not in mtn:
-    print(meutime)
-    escolha = input("escolha um de seus pokemon:  ")
-    if escolha == "1":
-        print("você escolheu: Delphox")
-        time.sleep(1)
-        delphox()
-
-    elif escolha == "2":
-        print("você escolheu: Swanpert")
-        time.sleep(1)
-        swanpert()
-
-    elif escolha == "3":
-        print("você escolheu: Gengar")
-        time.sleep(1)
-        gengar()
-
-    else:
-        print("esse número não corresponde à nenhum de seus pokemon...")
-        time.sleep(2)
-
-defe = ''
-hpA = ''
-
-def status_pokemon(DefP, HpPo):
-    global
-if escolha == "1":
-    defe = 7
-    hpA = hpD
-
-elif escolha == "2":
-    defe = 13
-    hpA = hpS
-
-elif escolha == "3":
-    defe = 8
-    hpA = hpG
-
-else:
-    defe = 0
-    hpA = 0
-
-ataqueI = random.randint(20, 40)
-
-defB = random.randint(2, 8) 
-
-defA = defB + defe
-
-atki = ataqueI - defA 
-
-Lista_d_atks = [1, 2, 3, 4]
-atke = ''
-atakado = 0
-
-print("a vida atual do seu pokemon é ", hpA)
-time.sleep(1)
-
-print("a vida atual do inimigo é ", hp_inimigo)
-time.sleep(1)
-
-ataqueP = random.randint(1, 100)
-
-
-def ataque_player(dano, chance):
-    global hp_inimigo
-    global atakado
-
-    taxa = random.randint(1, 100)
-
-    if taxa <= chance:
-        errouatk()
-        atakado = 1
-        time.sleep(2)
-    else:
-        print("seu pokemon ataca")
-        time.sleep(0.5)
-        hp_inimigo -= dano
-        time.sleep(2)
-
-        if hp_inimigo > 0:
-            print("a vida atual do inimigo é ", hp_inimigo)
-        else:
-            print("o HP do inimigo chegou à 0")
-        atakado = 1
-        time.sleep(1)
-
-
-
-if ataqueP % 2 == 0:
-    ataqueP = "player"
-else:
-    ataqueP = "inimigo"
+    if dice > chance_erro:
+        print("o ataque falhou")
+        return 
     
-while hpA > 0 and hp_inimigo > 0:
-    if ataqueP == "player":
-        print("é sua vez")
-        atakV()
-        atakado = 0
-        time.sleep(1)
+    dano_liquido = dano - goleiro['def']
+    if dano_liquido < 0:
+        dano_liquido = 0
+
+    goleiro['hp'] -= dano_liquido
+
+    print(f'{nome_do_ataque} causou {dano_liquido} de dano')
+
+    if goleiro['hp'] > 0:
+        print(f'HP de {goleiro['nome']}: {goleiro['hp']}')
+    else:
+        print(f'{goleiro['nome']} foi derrotado')
+
+def bolas(pokemon):
+    print(f'ataques de {pokemon['nome']}: ')
+    for numero, atake in pokemon['ataques'].items():
+        print(f'{numero} - {atake['nome']}')
+    return pokemon
+
+def listagem(time):
+    numeroT = 0
+    print('seu time:')
+    for pok in time:
+        numeroT +=1
+        print(numeroT, '- ', pok['nome'], '- HP', pok['hp'])
+
+def escolha_D_pokemon(escolha, time):
+    if escolha < 1 or escolha >len(time):
+        return None
+    return time[escolha - 1]
+
+def escalacao():
+    while True:
+        try:
+            escolhendo = int(input('escolha um dos seus pokemon pelo número: '))
+            escolhido = escolha_D_pokemon(escolhendo, meutime)
+
+            if escolhido is None:
+                print('esse número não corresponde à nenhum pokemon')
+                continue
+            escolhido = meutime[(escolhendo) - 1]
+
+            return escolhido
         
-        while atakado == 0:
-            atakado = 0
-            # chance = random.randint(1, 11)
+        except ValueError:
+            print('Digite um NÚMERO!!')
 
-            try:
-                atke = int(input("escolha um atk, pelo numero: "))
-            except ValueError:
-                print("isso não é um numero, perdeu a vez")
-                time.sleep(2)
-                break
-            if atke == 1:
-                ataque_player(20, 1)
-
-            elif atke == 2:
-                ataque_player(50, 35)
-
-            elif atke == 3:
-                ataque_player(30, 15)
-
-            elif atke == 4:
-                ataque_player(40, 20)
-
-            elif atke > 4:
-                print("esse atk n tá na lista")
-                time.sleep(2)
-
-        ataqueP = "inimigo"
-        time.sleep(1)
-
-    elif ataqueP == "inimigo":
-        chancei = random.randint(1, 11)
-
-        if chancei > 2:
-            print("o inimigo ataca...")
-            time.sleep(2)
-            hpA -= atki
-
-            if hpA > 0:
-                print("a vida atual do seu pokemon é ", hpA)
+def escolha_a_bola(pokemon):
+    while True:
+        try:
+            ataque = int(input('escolha um ataque pelo número: '))
+            if ataque in pokemon['ataques']:
+                return ataque
             else:
-                print("o HP do seu pokemon chegou à 0")
+                print("digite um numero valido")
 
-        else:
-            print("o inimigo errou o atk... q sorte")
+        except ValueError:
+            print("digite um número, pls")
+            
+def inimizades(inimigos):
+    picina = []
 
-        ataqueP = "player"
+    for mdf in inimigos:
+        picina += [mdf] * mdf['peso']
+
+    return random.choice(picina)
+
+def bola_inimga(inimigos):
+    ataqe = list(inimigos['ataques'].keys())
+    atkI = random.choice(ataqe)
+    return atkI
+
+def derrota_completa(time):
+    for poke in time:
+        if poke['hp'] > 0:
+            return False
+    return True
+
+
+perdeu = derrota_completa
+inimizmo = inimizades(inimigo)
+bolinha = bola_inimga
+
+print('um inimigo apareceu...')
+time.sleep(1)
+
+listagem(meutime)
+pokemon_escolhido = escalacao()
+time.sleep(2)
+if random.randint(1, 100) % 2 == 0:
+    turno = 'player'
+else:
+    turno = 'inimigo'
+
+while True:
+    if turno == 'player':
+        sair = input('qé metê o pé?? ')
+        if sair == 'sim':
+            break
+        ataqueE = escolha_a_bola(bolas(pokemon_escolhido))
+        atacamento(pokemon_escolhido, ataqueE, inimizmo)
+        if inimizmo['hp'] <= 0:
+            break
         time.sleep(2)
+        turno = 'inimigo'
 
-if hpA <= 0:
-    print("voce deixou seu pokemon morrer, coitadinho")
-
-if hp_inimigo <= 0:
-    print("parabens, seu pokemon derrotou o inimigo")
-
-time.sleep(3)
-
-############ PUTA QUE PARIU, EU DESISTO DESSA MERDA #############
-
-########## na vdd acho q agr deu certo hehe XD XD XD XD
+    if turno == 'inimigo':
+        atacamento(inimizmo, bolinha(inimizmo), pokemon_escolhido)
+        if perdeu(meutime):
+            break
+        turno = 'player'

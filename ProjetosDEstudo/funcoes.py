@@ -102,7 +102,7 @@
 
 ###3°  n entendi direito, sla vo fzr oq eu acho q é
 # def contador(inicio, fim, passo):
-##n entedi essa merda, vou voltar pro eu pikomon caseiro
+##n entedi essa merda, vou voltar pro meu pikomon caseiro
 
 
 
