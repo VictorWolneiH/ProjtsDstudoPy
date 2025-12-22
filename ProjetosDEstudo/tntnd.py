@@ -15,7 +15,7 @@ class Pokemon():
         self.defe = defe
         self.tipo1 = tipo1
         self.tipo2 = tipo2
-        self.moves = movimentos
+        self.movimentos = movimentos
         self.raridade = raridade
 
 class Movimento(): 
@@ -53,7 +53,7 @@ poke_Swampert = Pokemon('Swampert', 180, 20, {1: todos_moves['waterpulse'],
                                               4: todos_moves['muddy water']},
                                                'agua', 'terra', 'foda')
 
-poke_Gegar = Pokemon('Gengar', 110, 12, {1: todos_moves['shadowball'],
+poke_Gengar = Pokemon('Gengar', 110, 12, {1: todos_moves['shadowball'],
                                          2: todos_moves['lick'],
                                          3: todos_moves['shadowpunch'],
                                          4: todos_moves['curse']},
@@ -83,11 +83,15 @@ poke_Bidoof = Pokemon('BIDOOF', 1000000, 1000000, {1: todos_moves['apagamento'],
                                                    'além', None, 'INFINITA')                                        
 
 ####listas dos times
-meutime = [delphox, swampert, gengar]
-inimigo = [zubat, hoothoot, sentrent, bidoof]
+meutime = [poke_Delphox, poke_Swampert, poke_Gengar]
+inimigo = [poke_Zubat, poke_Hoothoot, poke_Sentrent, poke_Bidoof]
+
+
+
+valor_de_raridades = {'comum': 70, 'raro': 35, 'incomum': 45, 'lendario': 10, 'mitico': 10, 'foda': 3, 'INFINITA': 1} 
 
 ### vo tenta deixar as função tudo juntinha
-def pokebroke():
+def pokebroke():     #####interface
     time.sleep(1)
     print('aparentemente BIDOOF está de mal-humorl...')
     time.sleep(2)
@@ -99,53 +103,55 @@ def pokebroke():
     time.sleep(4)
     print('todos seus pokémon foram libertos e fugiram.')
 
-def atacamento(atacante, bola, goleiro):
-    ataque = atacante['ataques'][bola]
-
-    nome_do_ataque = ataque['nome']
-    dano = ataque['dano']
-    chance_erro = ataque['chance_erro']
-
-    print(f'{atacante['nome']} usou {nome_do_ataque}')
-
+def atacamento(bola, goleiro):  ###logica
     dice = random.randint(1, 100)
+    if dice > bola.chance_erro:
+        return {"sucesso": False, "motivo": "falhou"}
 
-    if dice > chance_erro:
-        print("o ataque falhou")
-        return 
-    
-    dano_liquido = dano - goleiro['def']
-    if dano_liquido < 0:
-        dano_liquido = 0
+    if bola.instakill:
+        dano_final = goleiro.hp
+        goleiro.hp = 0
+        return {"sucesso": True, "dano": dano_final, "instakill": True}
 
-    goleiro['hp'] -= dano_liquido
+    dano_liquido = max(0, bola.dano - goleiro.defe)
+    goleiro.hp -= dano_liquido
+    return {
+        "sucesso": True, 
+        "dano": dano_liquido, 
+        "ataque_nome": bola.nome,
+        "instakill": False
+    }
 
-    print(f'{nome_do_ataque} causou {dano_liquido} de dano')
+def atacamentoI(atacante, goleiro, resultado, move_nome):   ####interface
+    print(f'\n{atacante.nome} usou {move_nome}!')
 
-    if goleiro['hp'] > 0:
-        print(f'HP de {goleiro['nome']}: {goleiro['hp']}')
+    if not resultado["sucesso"]:
+        print(f"O ataque de {atacante.nome} falhou!")
+        return
+
+    if resultado.get("instakill"):
+        print(f"Bidoof foi bondoso com você hoje! {move_nome} APAGOU {goleiro.nome}!")
     else:
-        print(f'{goleiro['nome']} foi derrotado')
+        print(f"Causou {resultado['dano']} de dano!")
 
-def bolas(pokemon):
-    print(f'ataques de {pokemon['nome']}: ')
-    for numero, atake in pokemon['ataques'].items():
-        print(f'{numero} - {atake['nome']}')
-    return pokemon
+    if goleiro.hp > 0:
+        print(f'HP de {goleiro.nome}: {goleiro.hp}/{goleiro.hp_max}')
+    else:
+        print(f'--- {goleiro.nome} foi derrotado! ---')
 
-def listagem(time):
+def listagem(time):  ####interface
     numeroT = 0
     print('seu time:')
     for pok in time:
         numeroT +=1
-        print(numeroT, '- ', pok['nome'], '- HP', pok['hp'])
+        print(numeroT, '- ', pok.nome, '- HP', pok.hp_max)
 
-def escolha_D_pokemon(escolha, time):
+def escolha_D_pokemon(escolha, time):  ####logica
     if escolha < 1 or escolha >len(time):
         return None
     return time[escolha - 1]
 
-def escalacao():
+def escalacao():  ####interface
     while True:
         try:
             escolhendo = int(input('escolha um dos seus pokemon pelo número: '))
@@ -161,34 +167,37 @@ def escalacao():
         except ValueError:
             print('Digite um NÚMERO!!')
 
-def escolha_a_bola(pokemon):
+def escolha_a_bolaI(pokemon):  ####interface ##tbm tem a logica nele, mas é q a logica aqui n é quase nada
+    print(f"\n--- Turno de {pokemon.nome} ---")
+    for num, move in pokemon.movimentos.items():
+        print(f"{num}: {move.nome} (Dano: {move.dano})")
+
     while True:
         try:
-            ataque = int(input('escolha um ataque pelo número: '))
-            if ataque in pokemon['ataques']:
-                return ataque
-            else:
-                print("digite um numero valido")
-
+            escolha = int(input('Escolha o número do ataque: '))
+            if escolha in pokemon.movimentos:
+                return pokemon.movimentos[escolha]
+            print("Número inválido! Escolha entre 1 e 4.")
         except ValueError:
-            print("digite um número, pls")
+            print("Por favor, digite apenas números.")
             
-def inimizades(inimigos):
+def inimizades(inimigos):  ####logica
     picina = []
 
     for mdf in inimigos:
-        picina += [mdf] * mdf['peso']
+        raro = mdf.raridade
+        quantidade = valor_de_raridades[raro]
+        picina += [mdf] * quantidade
 
     return random.choice(picina)
 
-def bola_inimga(inimigos):
-    ataqe = list(inimigos['ataques'].keys())
-    atkI = random.choice(ataqe)
-    return atkI
+def bola_inimga(inimigos):  ####logica
+    ataqe = list(inimigos.movimentos.values())
+    return random.choice(ataqe)
 
-def derrota_completa(time):
+def derrota_completa(time):  ####logica
     for poke in time:
-        if poke['hp'] > 0:
+        if poke.hp > 0:
             return False
     return True
 
@@ -213,15 +222,18 @@ while True:
         sair = input('qé metê o pé?? ')
         if sair == 'sim':
             break
-        ataqueE = escolha_a_bola(bolas(pokemon_escolhido))
-        atacamento(pokemon_escolhido, ataqueE, inimizmo)
-        if inimizmo['hp'] <= 0:
+        ataqueE = escolha_a_bolaI(pokemon_escolhido)
+        mostrar = atacamento(ataqueE, inimizmo)
+        atacamentoI(pokemon_escolhido, inimizmo, mostrar, mostrar['ataque_nome'])
+        if inimizmo.hp <= 0:
             break
         time.sleep(2)
         turno = 'inimigo'
 
     if turno == 'inimigo':
-        atacamento(inimizmo, bolinha(inimizmo), pokemon_escolhido)
+        mostrar = atacamento(bolinha(inimizmo), pokemon_escolhido)
+        atacamentoI(inimizmo, pokemon_escolhido, mostrar, mostrar['ataque_nome'])
+
         if perdeu(meutime):
             break
         turno = 'player'
