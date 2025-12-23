@@ -18,7 +18,7 @@ def pokebroke():     #####interface
     time.sleep(3)
 ###vou criar as funções de efeito aqui em cima
 def queima(pokemon):
-    dano = max(1, pokemon.hp_max // 11)
+    dano = 7
     pokemon.hp -= dano
     print(f'{pokemon.nome} sofreu {dano} de dano por queimadura!')
 
@@ -26,10 +26,19 @@ def maldicao():
     pokebroke()
     
 def veneno(pokemon):
-    dano = max(1, pokemon.hp_max // 10)
+    dano = 13
     pokemon.hp -= dano
     print(f'{pokemon.nome} sofreu {dano} de dano por veneno!')
-    
+
+def defesa_baixa(pokemon):
+    pokemon.defe -= 5
+    print(f"A defesa de {pokemon.nome} caiu!")
+
+def status_up(usuario):
+    usuario.defe += 5
+    usuario.hp += 10
+    print(f"{usuario.nome} teve todos os status aumentados!")
+
 ### tentando criar a classe dos pokemon e dos atk deles... 
 class Pokemon():
     def __init__(self, nome, hp, defe, movimentos, tipo1, tipo2 = None, raridade = 'comum'):
@@ -56,29 +65,52 @@ class Movimento():
 lista_efeitos = {'queimar': queima,
                  'veneneo': veneno}
 
-todos_moves = {'waterpulse': Movimento('waterpulse', 20, 100, 'agua', None, False), 
-               'earfquake': Movimento('earfquake', 50, 35, 'terra', None, False), 
-               'mudslap': Movimento('mudslap', 30, 15, 'terra', None, False), 
-               'muddy water': Movimento('Muddy Water', 40, 20, 'agua', None, False),
-               'lick': Movimento('Lick', 35, 90, 'fantasma', None, False),
-               'shadowball': Movimento('ShadowBall', 50, 40, 'sombrio', None, False),
-               'curse': Movimento('Curse', 10, 100, 'sombrio', None, False),
-               'shadowpunch': Movimento('ShadowPunch', 35, 60, 'sombrio', None, False),
-               'bite': Movimento('Bite', 20, 70, 'sombrio', None, False),
-               'mystical fire': Movimento('Mystical Fire', 60, 60, 'fogo', 'queimar', False),
-               'psybean': Movimento('PsyBean', 45, 55, 'psiquico', None, False),
-               'flamewheel': Movimento('FlameWheel', 40, 75, 'fogo', 'queimar', False),
-               'scratch': Movimento('Scratch', 25, 100, 'normal', None, False),
-               'tackle': Movimento('Tackle', 15, 100, 'normal', None, False),
-               'wing attack': Movimento('Wing Attack', 35, 100, 'voador', None, False),
-               'peck': Movimento('Peck', 25, 100, 'normal', None, False), 
-               'echoed voice': Movimento('Echoed Voice', 45, 90, 'normal', None, False),
+todos_moves = {'waterpulse': Movimento('Water Pulse', 45, 100, 'agua', None, False), 
+               'earfquake': Movimento('Earthquake', 80, 100, 'terra', None, False), 
+               'mudslap': Movimento('Mud Slap', 30, 95, 'terra', None, False), 
+               'muddy water': Movimento('Muddy Water', 65, 85, 'agua', None, False),
+               'lick': Movimento('Lick', 35, 100, 'fantasma', 'paralisar', False),
+               'shadowball': Movimento('ShadowBall', 75, 100, 'sombrio', None, False),
+               'curse': Movimento('Curse', 20, 100, 'sombrio', 'maldito', False),
+               'shadowpunch': Movimento('ShadowPunch', 55, 1000, 'sombrio', None, False),
+               'bite': Movimento('Bite', 40, 100, 'sombrio', None, False),
+               'mystical fire': Movimento('Mystical Fire', 70, 100, 'fogo', 'queimar', False),
+               'psybean': Movimento('PsyBean', 60, 100, 'psiquico', None, False),
+               'flamewheel': Movimento('FlameWheel', 55, 95, 'fogo', 'queimar', False),
+               'scratch': Movimento('Scratch', 35, 100, 'normal', None, False),
+               'tackle': Movimento('Tackle', 30, 100, 'normal', None, False),
+               'wing attack': Movimento('Wing Attack', 45, 100, 'voador', None, False),
+               'peck': Movimento('Peck', 30, 100, 'normal', None, False), 
+               'echoed voice': Movimento('Echoed Voice', 40, 100, 'normal', None, False),
                'apagamento': Movimento('Apagamento Existencial', 0, 1000000, 'além', None, True),
-               'pokebroke': Movimento('Quebrar Pokebolas', 0, 1000000, 'além', 'maldicao', False)}
-
+               'pokebroke': Movimento('Quebrar Pokebolas', 0, 1000000, 'além', 'maldicao', False),
+               'precipice blades': Movimento('Precipice Blades', 80, 85, 'terra', None, False),
+               'hammer arm': Movimento('Hammer Arm', 60, 90, 'lutador', None, False),
+               'eruption': Movimento('Eruption', 90, 100, 'fogo', None, False),
+               'solar beam': Movimento('Solar Beam', 70, 100, 'planta', None, False),
+               'ominous wind': Movimento('Ominous Wind', 40, 100, 'fantasma', 'status_up', False),
+               'nightmare': Movimento('Nightmare', 20, 100, 'fantasma', 'maldicao', False),
+               'dream eater': Movimento('Dream Eater', 65, 100, 'psiquico', None, False),
+               'dark void': Movimento('Dark Void', 0, 80, 'sombrio', 'dormir', False),
+               'dark pulse': Movimento('Dark Pulse', 50, 100, 'sombrio', 'recuar', False),
+               'rock slide': Movimento('Rock Slide', 45, 90, 'rocha', 'recuar', False),
+               'crunch': Movimento('Crunch', 55, 100, 'sombrio', 'defesa_baixa', False),
+               'stone edge': Movimento('Stone Edge', 70, 80, 'rocha', None, False),
+               'bone rush': Movimento('Bone Rush', 40, 90, 'terra', None, False),
+               'metal claw': Movimento('Metal Claw', 35, 95, 'aço', 'ataque_sobe', False),
+               'close combat': Movimento('Close Combat', 80, 100, 'lutador', 'defesa_baixa', False),
+               'aura sphere': Movimento('Aura Sphere', 50, 1000, 'lutador', None, False),
+               'draco meteor': Movimento('Draco Meteor', 95, 90, 'dragao', None, False),
+               'extreme speed': Movimento('Extreme Speed', 45, 100, 'normal', None, False),
+               'outrage': Movimento('Outrage', 75, 100, 'dragao', None, False),
+               'dragon ascent': Movimento('Dragon Ascent', 85, 100, 'voador', 'defesa_baixa', False),
+               'water spout': Movimento('Water Spout', 90, 100, 'agua', None, False),
+               'thunder': Movimento('Thunder', 65, 70, 'eletrico', 'paralisar', False),
+               'ice beam': Movimento('Ice Beam', 50, 100, 'gelo', 'congelar', False),
+               'origin pulse': Movimento('Origin Pulse', 80, 85, 'agua', None, False)}
 
 ###pokemon
-poke_Swampert = Pokemon('Swampert', 180, 20, {1: todos_moves['waterpulse'],
+poke_Swampert = Pokemon('Swampert', 180, 13, {1: todos_moves['waterpulse'],
                                               2: todos_moves['earfquake'],
                                               3: todos_moves['mudslap'],
                                               4: todos_moves['muddy water']},
@@ -111,6 +143,8 @@ poke_Hoothoot = Pokemon('HootHoot', 100, 15, {1: todos_moves['peck'],
 poke_Bidoof = Pokemon('BIDOOF', 1000000, 1000000, {1: todos_moves['apagamento'],
                                                    2: todos_moves['pokebroke']},
                                                    'além', None, 'INFINITA')                                        
+
+poke_Groundon = Pokemon('Groundon', 300, 15, )
 
 ####listas dos times
 meutime = [poke_Delphox, poke_Swampert, poke_Gengar]
